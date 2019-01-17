@@ -1,6 +1,8 @@
 package com.guitar.db;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
@@ -46,30 +48,51 @@ public class LocationPersistenceTests {
 		Location location = new Location();
 		location.setCountry("Canada");
 		location.setState("British Columbia");
-		location = locationRepository.create(location);
+		location = locationJpaRepository.saveAndFlush(location);
 		
 		// clear the persistence context so we don't return the previously cached location object
 		// this is a test only thing and normally doesn't need to be done in prod code
 		entityManager.clear();
 
-		Location otherLocation = locationRepository.find(location.getId());
+		Location otherLocation = locationJpaRepository.findOne(location.getId());
 		assertEquals("Canada", otherLocation.getCountry());
 		assertEquals("British Columbia", otherLocation.getState());
 		
 		//delete BC location now
-		locationRepository.delete(otherLocation);
+		locationJpaRepository.delete(otherLocation);
 	}
 
 	@Test
 	public void testFindWithLike() throws Exception {
-		List<Location> locs = locationRepository.getLocationByStateName("New");
+		List<Location> locs = locationJpaRepository.findByStateStartingWith("New");
 		assertEquals(4, locs.size());
+	}
+	
+	@Test
+	public void testFindWithNotLike() throws Exception {
+		List<Location> locs = locationJpaRepository.findByStateNotLike("New%");
+		assertEquals(46, locs.size());
+	}
+	
+	@Test
+	public void testJpaAnd() throws Exception {
+		List<Location> locs = locationJpaRepository.findByStateNot("Utah");
+		assertNotNull(locs);
+		assertNotSame("Utah", locs.get(0).getState());
+	}
+	
+	
+	@Test
+	public void testJpaOr() throws Exception {
+		List<Location> locs = locationJpaRepository.findByStateIsOrCountryEquals("Utah", "United States");
+		assertNotNull(locs);
+		//assertEquals("Utah", locs.get(0).getState());
 	}
 
 	@Test
 	@Transactional  //note this is needed because we will get a lazy load exception unless we are in a tx
 	public void testFindWithChildren() throws Exception {
-		Location arizona = locationRepository.find(3L);
+		Location arizona = locationJpaRepository.findOne(3L);
 		assertEquals("United States", arizona.getCountry());
 		assertEquals("Arizona", arizona.getState());
 		
