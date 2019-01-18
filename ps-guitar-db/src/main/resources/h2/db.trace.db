@@ -1,0 +1,6 @@
+01-18 21:52:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT M.ID, M.NAME, M.FOUNDEDDATE, M.AVERAGEYEARLYSALES, M.LOCATION_ID AS HEADQUARTERS_ID, M.ACTIVEFROM MANUFACTURER M[*] LEFT JOIN MODEL MOD ON (M.ID = MOD.MANUFACTURER_ID) LEFT JOIN MODELTYPE MT ON (MT.ID = MOD.MODELTYPE_ID) WHERE (MT.NAME = ?) "; SQL statement:
+SELECT m.id, m.name, m.foundedDate, m.averageYearlySales, m.location_id as headquarters_id, m.activeFROM Manufacturer m LEFT JOIN Model mod ON (m.id = mod.manufacturer_id) LEFT JOIN ModelType mt ON (mt.id = mod.modeltype_id) WHERE (mt.name = ?) [42000-182]
+01-18 21:53:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "SELECT M.ID, M.NAME, M.FOUNDEDDATE, M.AVERAGEYEARLYSALES, M.LOCATION_ID AS HEADQUARTERS_ID, M.ACTIVEFROM MANUFACTURER M[*] LEFT JOIN MODEL MOD ON (M.ID = MOD.MANUFACTURER_ID) LEFT JOIN MODELTYPE MT ON (MT.ID = MOD.MODELTYPE_ID) WHERE (MT.NAME = ?) "; SQL statement:
+SELECT m.id, m.name, m.foundedDate, m.averageYearlySales, m.location_id as headquarters_id, m.activeFROM Manufacturer m LEFT JOIN Model mod ON (m.id = mod.manufacturer_id) LEFT JOIN ModelType mt ON (mt.id = mod.modeltype_id) WHERE (mt.name = ?) [42000-182]
