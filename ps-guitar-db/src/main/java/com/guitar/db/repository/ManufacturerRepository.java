@@ -67,11 +67,7 @@ public class ManufacturerRepository {
 	/**
 	 * Native Query finder
 	 */
-	public List<Manufacturer> getManufacturersThatSellModelsOfType(String modelType) {
-		@SuppressWarnings("unchecked")
-		List<Manufacturer> mans = entityManager
-				.createNamedQuery("Manufacturer.getAllThatSellAcoustics")
-				.setParameter(1, modelType).getResultList();
-		return mans;
+	public List<Manufacturer> getManufacturersThatSellModelsOfType(String modelType) {	
+		return manufacturerJpaRepository.getAllThatSellAcoustics(modelType);
 	}
 }
